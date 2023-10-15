@@ -1,4 +1,4 @@
-package com.cac0.g6.tpfinal;
+package com.cac.g6.tpfinal;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package com.cac0.g6.tpfinal;
+package com.cac.g6.tpfinal;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

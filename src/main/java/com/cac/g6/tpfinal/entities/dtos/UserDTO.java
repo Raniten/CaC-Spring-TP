@@ -1,26 +1,25 @@
-package com.cac.g6.tpfinal.entities;
+package com.cac.g6.tpfinal.entities.dtos;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Table (name = "users")
-
-@Setter
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+public class UserDTO {
 
-public class User {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column(name = "idUser")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUser;
 
-    @Column (name = "firstName")
+    @Column(name = "firstName")
     private String firstName;
 
     @Column (name = "lastName")
@@ -31,6 +30,5 @@ public class User {
 
     @Column (name = "idAccount")
     private Long idAccount;
-
 
 }

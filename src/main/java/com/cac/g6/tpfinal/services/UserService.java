@@ -1,38 +1,36 @@
 package com.cac.g6.tpfinal.services;
 
+import com.cac.g6.tpfinal.entities.User;
+import com.cac.g6.tpfinal.entities.dtos.UserDTO;
+import com.cac.g6.tpfinal.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class UserService {
 
-    public List<String> getUsers() {
-        List<String> users = new ArrayList<String>();
+    @Autowired
+    private final UserRepository repository;
 
-        users.add("Usuario 1");
-        users.add("Usuario 2");
-        users.add("Usuario 3");
-        users.add("Usuario 4");
-        users.add("Usuario 5");
-
-        return users;
+    public UserService (UserRepository repository) {
+        this.repository = repository;
     }
 
-    public String getUserById(long id) {
-        List<String> users = new ArrayList<String>();
 
-        users.add("Usuario 1");
-        users.add("Usuario 2");
-        users.add("Usuario 3");
-        users.add("Usuario 4");
-        users.add("Usuario 5");
+    public List<User> getUsers() {
+        return repository.findAll();
+    }
 
-        if(id <= users.size() && id > 0) {
-            return users.get(Integer.parseInt(String.valueOf(id-1)));
-        } else {
-            return "ID inválida, no existe ese usuario (sólo cargamos 5)";
-        }
+    public User getUserById(Long id) {
+        return repository.findById(id).get();
+
+    }
+
+    public User addUser (User newUser) {
+        repository.save(newUser);
+        return newUser;
+
     }
 }

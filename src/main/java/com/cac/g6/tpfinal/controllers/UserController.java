@@ -1,11 +1,10 @@
 package com.cac.g6.tpfinal.controllers;
 
+import com.cac.g6.tpfinal.entities.User;
+import com.cac.g6.tpfinal.entities.dtos.UserDTO;
 import com.cac.g6.tpfinal.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,46 +21,49 @@ public class UserController {
 
     //OBTENER la lista de TODOS los usuarios (GET)
     @GetMapping(value="/users")
-    public List<String> getUsers() {
-
+    public List<User> getUsers() {
         return service.getUsers();
-        //return List.of("Lista de Usuarios (hardcode)");
+
     }
 
     //OBTENER UN SOLO usuario por su ID (GET)
     @GetMapping(value="/users/{id}")
-    public String getUserById(@PathVariable long id) {
-        /*String nombre;
-        if(id==1){
-            nombre="usuario1 (hardcode)";
-        } else {
-            nombre="otro suario que no es el 1 (harcode)";
-        }
-
-        return nombre;*/
-
+    public User getUserById(@PathVariable Long id) {
         return service.getUserById(id);
     }
 
+
+    /*//CREAR UN SOLO usario (POST)
+    @PostMapping(value = "/users")
+    public UserDTO createUser(@RequestBody UserDTO newUser) {
+
+        return service.addUser(newUser);
+
+    }*/
+
     //CREAR UN SOLO usario (POST)
-    public void createUser() {
+    @PostMapping(value = "/users")
+    public User createUser(@RequestBody User newUser) {
+
+        return service.addUser(newUser);
 
     }
 
+
     //Modificar TOTALMENTE UN SOLO usuario (PUT)
-    public String updateFullUser(long id) {
+    public String updateFullUser(Long id) {
 
         return "";
     }
 
     //Modificar PARCIALMENTE UN SOLO usuario (PATCH)
-    public String updatePartialUser(long id){
+    public String updatePartialUser(Long id){
 
         return "";
     }
 
     // ELIMINAR UN SOLO usuario (DELETE)
-    public void deleteUserById(long id){
+    public void deleteUserById(Long id){
 
 
     }

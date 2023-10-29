@@ -15,15 +15,18 @@ public class UserService {
     private final UserRepository repository;
 
     public UserService (UserRepository repository) {
+
         this.repository = repository;
     }
 
 
     public List<User> getUsers() {
+
         return repository.findAll();
     }
 
     public User getUserById(Long id) {
+
         return repository.findById(id).get();
 
     }

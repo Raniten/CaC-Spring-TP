@@ -24,4 +24,7 @@ public class User {
 
     @Column(name = "dni")
     private String dni;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Account account;
 }

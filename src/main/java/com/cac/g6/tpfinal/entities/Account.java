@@ -25,5 +25,7 @@ public class Account {
     @Column(name = "balance")
     private float balance;
 
-
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

@@ -1,36 +1,27 @@
 package com.cac.g6.tpfinal.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
-@Table (name = "users")
-
-@Setter
+@Table(name="users")
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 
 public class User {
+
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column(name = "idUser")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUser;
 
-    @Column (name = "firstName")
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column (name = "lastName")
+    @Column(name = "last_name")
     private String lastName;
 
-    @Column (name = "identificationNumber")
+    @Column(name = "dni")
     private String dni;
-
-    @Column (name = "idAccount")
-    private Long idAccount;
-
-
 }

@@ -1,7 +1,6 @@
 package com.cac.g6.tpfinal.services;
 
 import com.cac.g6.tpfinal.entities.User;
-import com.cac.g6.tpfinal.entities.dtos.UserDTO;
 import com.cac.g6.tpfinal.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,5 +34,9 @@ public class UserService {
         repository.save(newUser);
         return newUser;
 
+    }
+
+    public void deleteUserById (Long id) {
+        repository.deleteById(id);
     }
 }

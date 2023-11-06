@@ -1,9 +1,9 @@
 package com.cac.g6.tpfinal.controllers;
 
 import com.cac.g6.tpfinal.entities.User;
-import com.cac.g6.tpfinal.entities.dtos.UserDTO;
 import com.cac.g6.tpfinal.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -64,8 +64,9 @@ public class UserController {
     }
 
     // ELIMINAR UN SOLO usuario (DELETE)
-    public void deleteUserById(Long id){
-
-
+    @DeleteMapping (value="/users/{id}")
+    public ResponseEntity<Void> deleteUserById(@PathVariable Long id) {
+        service.deleteUserById(id);
+        return ResponseEntity.noContent().build();
     }
 }

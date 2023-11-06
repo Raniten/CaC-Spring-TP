@@ -7,44 +7,49 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/accounts")
 public class AccountController {
 
     @Autowired
     private final AccountService service;
 
     public AccountController(AccountService service) {
-
         this.service = service;
     }
 
     //OBTENER la lista de TODAS las cuentas (GET)
-    @GetMapping(value="/accounts")
-    public List<Account> getAccounts() {
-        return service.getAccounts();
+    @GetMapping
+    public ResponseEntity<List<Account>> findAll() {
+        return ResponseEntity.ok(service.findAll());
     }
 
     //OBTENER UNA SOLA cuenta por su ID (GET)
-    @GetMapping(value="/accounts/{id}")
-    public Account getAccountById(@PathVariable Long id) {
-        return service.getAccountById(id);
+    @GetMapping(value="/{idA}")
+    public ResponseEntity<Account> findByID(@PathVariable("idA") Long idA) {
+        Optional<Account> optAccount = service.findById(idA);
+        if(optAccount.isPresent()){
+            return  ResponseEntity.ok(optAccount.get());
+        }else{
+            return ResponseEntity.notFound().build();
+        }
     }
 
     //CREAR UNA SOLA cuenta (POST)
-    @PostMapping(value = "/accounts")
-    public Account createAccount(@RequestBody Account newAccount) {
+    @PostMapping
+    public Account save(@RequestBody Account newAccount) {
 
         return service.addAccount(newAccount);
 
     }
 
     // ELIMINAR UNA SOLA cuenta (DELETE)
-    @DeleteMapping(value="/accounts/{id}")
-    public ResponseEntity<Void> deleteAccountById(@PathVariable Long id) {
+    @DeleteMapping("/{idA}")
+    public ResponseEntity<Void> deleteById(@PathVariable("idA") Long idA) {
 
-        service.deleteAccountById(id);
+        service.deleteAccountById(idA);
         return ResponseEntity.noContent().build();
     }
 

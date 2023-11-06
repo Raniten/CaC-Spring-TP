@@ -41,6 +41,8 @@ public class UserService {
     }
 
     public User addUser (User user) {
+
+
         // Verifica si la cuenta existe
         //Account account = accountRepository.findById(user.getAccount().getIdAccount()).orElse(null);
 
@@ -52,9 +54,8 @@ public class UserService {
         Account account = accountService.createAccount(user);
 
         // Asocia la cuenta al usuario
-        user.setAccount(account);
-
         account.setUser(user);
+        user.setAccount(account);
 
         // Guarda el usuario
         repository.save(user);

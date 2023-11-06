@@ -1,5 +1,6 @@
 package com.cac.g6.tpfinal.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,9 +23,10 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "dni")
+    @Column(name = "dni",unique = true)
     private String dni;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
+//   ...........
     private Account account;
 }

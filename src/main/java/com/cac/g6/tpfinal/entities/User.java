@@ -1,8 +1,11 @@
 package com.cac.g6.tpfinal.entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name="users")
@@ -17,16 +20,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUser;
 
-    @Column(name = "first_name")
-    private String firstName;
+    private String userName;
+    private String email;
+    private String password;
+    private LocalDate birthDate;
+    private String address;
 
-    @Column(name = "last_name")
-    private String lastName;
-
-    @Column(name = "dni",unique = true)
-    private String dni;
-
-    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
-//   ...........
-    private Account account;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Account> account;
 }

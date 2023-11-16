@@ -1,9 +1,6 @@
 package com.cac.g6.tpfinal.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonIgnoreType;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,6 +13,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "account_type", discriminatorType = DiscriminatorType.STRING)
 
 public class Account {
 
@@ -26,12 +25,19 @@ public class Account {
     @Column(name = "account_number",unique = true)
     private String accountNumber;
 
-    @Column(name = "balance")
     private float balance;
+    private String cbu;
+    private String alias;
 
-    @OneToOne
-    @JoinColumn(name = "idUser", referencedColumnName = "idUser")
-    @JsonIgnoreProperties("account")
-//   ................
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "currency_id")
+    private Currency currency;
+
+
+
 }

@@ -52,7 +52,7 @@ public class AccountService {
 
     public Account createAccount(User user) {
         Account account = new Account();
-        account.setAccountNumber(user.getDni());
+
         account.setBalance(10000.0f);
 
         return repository.save(account);

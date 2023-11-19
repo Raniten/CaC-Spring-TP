@@ -18,7 +18,7 @@ public class SavingsAccount extends Account {
     private float maxTransferAmount;
 
     public SavingsAccount(Long id, String accountNumber, float balance, String cbu, String alias, User user, Currency currency, float maxTransferAmount) {
-        super(id, accountNumber, balance, cbu, alias, user, currency);
+        super(id, accountNumber, balance, cbu, alias, AccountType.SAVINGS, user, currency);
         this.maxTransferAmount = maxTransferAmount;
     }
 }

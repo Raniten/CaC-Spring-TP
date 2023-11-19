@@ -23,15 +23,18 @@ public class AccountBuilder {
 
     // Métodos para establecer los atributos específicos de SavingsAccount y CurrentAccount
 
-    // Método para construir una SavingsAccount
+    // Método para construir una SAVINGSACCOUNT
 
-    public SavingsAccount buildSavingsAccount() {
+    public SavingsAccount buildSavingsAccount(Long id, String accountNumber, float balance, String cbu, String alias, User user, Currency currency, float maxTransferAmount) {
         return new SavingsAccount(id, accountNumber, balance, cbu, alias, user, currency, maxTransferAmount);
     }
 
-    // Método para construir una CurrentAccount
+    // Método para construir una CURRENTACCOUNT
 
-    public CurrentAccount buildCurrentAccount() {
+    public CurrentAccount buildCurrentAccount(Long id, String accountNumber, float balance, String cbu, String alias, User user, Currency currency, float overdraftLimit) {
         return new CurrentAccount(id, accountNumber, balance, cbu, alias, user, currency, overdraftLimit);
     }
+
+
+
 }

@@ -1,46 +1,44 @@
 package com.cac.g6.tpfinal.services;
 
-import com.cac.g6.tpfinal.entities.Account;
-import com.cac.g6.tpfinal.entities.User;
+import com.cac.g6.tpfinal.entities.*;
+import com.cac.g6.tpfinal.entities.dto.AccountDto;
+import com.cac.g6.tpfinal.entities.dto.UserDto;
 import com.cac.g6.tpfinal.repositories.UserRepository;
 import com.cac.g6.tpfinal.repositories.AccountRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class UserService {
 
     @Autowired
-    private final UserRepository repository;
+    private final UserRepository userRepository;
 
     @Autowired
-    private final AccountService accountService;
-
-    @Autowired
-    private final AccountRepository accountRepository;
+    private final CurrencyService currencyService;
 
     public UserService (UserRepository repository) {
-
-        this.repository = repository;
-        accountService = null;
-        accountRepository = null;
+        this.userRepository = repository;
+        currencyService = null;
     }
 
 
     public List<User> getUsers() {
 
-        return repository.findAll();
+        return userRepository.findAll();
     }
 
     public User getUserById(Long id) {
 
-        return repository.findById(id).get();
+        return userRepository.findById(id).get();
 
     }
 
-    public User addUser (User user) {
+    /*public User addUser (User user) {
 
 
         // Verifica si la cuenta existe
@@ -55,7 +53,7 @@ public class UserService {
 
         // Asocia la cuenta al usuario
         account.setUser(user);
-        user.setAccount(account);
+        //user.setAccount(account);
 
         // Guarda el usuario
         repository.save(user);
@@ -64,10 +62,41 @@ public class UserService {
         //accountRepository.save(account);
 
         return user;
+    }*/
+    @Transactional
+    public User addUser(UserDto requestUser) {
+        User user = new User();
+
+        user.setUserName(requestUser.getUserName());
+        user.setEmail(requestUser.getEmail());
+        user.setPassword(requestUser.getPassword());
+        user.setDni(requestUser.getDni());
+        user.setBirthDate(requestUser.getBirthDate());
+        user.setAddress(requestUser.getAddress());
+
+        List<Account> accounts = new ArrayList<>();
+
+        Currency currency = new Currency();
+
+        Account account = null;
+        for (AccountDto accountRequest : requestUser.getAccounts()) {
+            if (accountRequest.getAccountType().equalsIgnoreCase("SAVINGS")) {
+                account = new AccountBuilder().buildSavingsAccount(0L, "0000", 0.0F, "CBU", Account.generateRandomAlias(), user, currencyService.getCurrencyById(accountRequest.getCurrency()), accountRequest.getAmount());
+
+            } else if (accountRequest.getAccountType().equalsIgnoreCase("CURRENT")) {
+                account = new AccountBuilder().buildCurrentAccount(0L, "0000", 0.0F, "CBU", Account.generateRandomAlias(), user, currencyService.getCurrencyById(accountRequest.getCurrency()), accountRequest.getAmount());
+            }
+            accounts.add(account);
+        }
+
+        user.setAccounts(accounts);
+
+        userRepository.save(user);
+        return user;
     }
 
     public void deleteUserById (Long id) {
 
-        repository.deleteById(id);
+        userRepository.deleteById(id);
     }
 }

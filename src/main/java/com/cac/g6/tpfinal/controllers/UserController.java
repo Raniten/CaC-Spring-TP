@@ -1,6 +1,8 @@
 package com.cac.g6.tpfinal.controllers;
 
 import com.cac.g6.tpfinal.entities.User;
+import com.cac.g6.tpfinal.entities.dto.UserDto;
+import com.cac.g6.tpfinal.services.CurrencyService;
 import com.cac.g6.tpfinal.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,28 +11,31 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/users")
 public class UserController {
 
     @Autowired
-    private final UserService service;
+    private final UserService userService;
 
-    public UserController(UserService service) {
+    @Autowired
+    private final CurrencyService currencyService;
 
-        this.service = service;
+    public UserController(UserService service, CurrencyService currencyService) {
+        this.userService = service;
+        this.currencyService = currencyService;
     }
 
     //OBTENER la lista de TODOS los usuarios (GET)
-    @GetMapping(value="/users")
+    @GetMapping
     public List<User> getUsers() {
-        return service.getUsers();
+        return userService.getUsers();
 
     }
 
     //OBTENER UN SOLO usuario por su ID (GET)
-    @GetMapping(value="/users/{id}")
+    @GetMapping(value="/{id}")
     public User getUserById(@PathVariable Long id) {
-        return service.getUserById(id);
+        return userService.getUserById(id);
     }
 
 
@@ -43,12 +48,13 @@ public class UserController {
     }*/
 
     //CREAR UN SOLO usario (POST)
-    @PostMapping(value = "/users")
-    public User createUser(@RequestBody User newUser) {
+    @PostMapping
+    public User createUser(@RequestBody UserDto newUser) {
 
-        return service.addUser(newUser);
-
+        return userService.addUser(currencyService, newUser);
     }
+
+
 
 
     //Modificar TOTALMENTE UN SOLO usuario (PUT)
@@ -64,9 +70,9 @@ public class UserController {
     }
 
     // ELIMINAR UN SOLO usuario (DELETE)
-    @DeleteMapping (value="/users/{id}")
+    @DeleteMapping (value="/{id}")
     public ResponseEntity<Void> deleteUserById(@PathVariable Long id) {
-        service.deleteUserById(id);
+        userService.deleteUserById(id);
         return ResponseEntity.noContent().build();
     }
 }

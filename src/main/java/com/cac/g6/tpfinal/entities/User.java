@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,9 +24,10 @@ public class User {
     private String userName;
     private String email;
     private String password;
+    private String dni;
     private LocalDate birthDate;
     private String address;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Account> account;
+    private List<Account> accounts = new ArrayList<>();
 }

@@ -4,7 +4,6 @@ import com.cac.g6.tpfinal.entities.*;
 import com.cac.g6.tpfinal.entities.dto.AccountDto;
 import com.cac.g6.tpfinal.entities.dto.UserDto;
 import com.cac.g6.tpfinal.repositories.UserRepository;
-import com.cac.g6.tpfinal.repositories.AccountRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,10 +18,18 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Autowired
+    private final AccountService accountService;
+
+    @Autowired
+    private final RandomCodeGeneratorService randomCodes;
+
+    @Autowired
     private final CurrencyService currencyService;
 
-    public UserService (UserRepository repository) {
+    public UserService (UserRepository repository, AccountService accountService, RandomCodeGeneratorService randomCodes) {
         this.userRepository = repository;
+        this.accountService = accountService;
+        this.randomCodes = randomCodes;
         currencyService = null;
     }
 
@@ -80,11 +87,14 @@ public class UserService {
 
         Account account = null;
         for (AccountDto accountRequest : requestUser.getAccounts()) {
+            String actNbr = accountService.generateRandomDigits(10);
+            String cbu = accountService.generateRandomDigits(15);
+
             if (accountRequest.getAccountType().equalsIgnoreCase("SAVINGS")) {
-                account = new AccountBuilder().buildSavingsAccount(0L, "0000", 0.0F, "CBU", Account.generateRandomAlias(), user, currencyService.getCurrencyById(accountRequest.getCurrency()), accountRequest.getAmount());
+                account = new AccountBuilder().buildSavingsAccount(null, actNbr, 0.0F, "23650"+actNbr+cbu, accountService.generateRandomAlias(), user, currencyService.getCurrencyById(accountRequest.getCurrency()), accountRequest.getAmount());
 
             } else if (accountRequest.getAccountType().equalsIgnoreCase("CURRENT")) {
-                account = new AccountBuilder().buildCurrentAccount(0L, "0000", 0.0F, "CBU", Account.generateRandomAlias(), user, currencyService.getCurrencyById(accountRequest.getCurrency()), accountRequest.getAmount());
+                account = new AccountBuilder().buildCurrentAccount(null, actNbr, 0.0F, "23650"+actNbr+cbu, accountService.generateRandomAlias(), user, currencyService.getCurrencyById(accountRequest.getCurrency()), accountRequest.getAmount());
             }
             accounts.add(account);
         }

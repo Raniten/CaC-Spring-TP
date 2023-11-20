@@ -1,9 +1,5 @@
 package com.cac.g6.tpfinal.entities.dto;
 
-import com.cac.g6.tpfinal.entities.AccountType;
-import com.cac.g6.tpfinal.entities.Currency;
-import com.cac.g6.tpfinal.entities.User;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +19,7 @@ public class AccountDto {
     private String alias;
     private String accountType;
     private float amount;
-    private User user;
+    private Long user;
     private Long currency;
 
 

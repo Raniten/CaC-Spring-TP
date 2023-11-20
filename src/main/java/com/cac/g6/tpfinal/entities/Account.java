@@ -1,6 +1,8 @@
 package com.cac.g6.tpfinal.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,7 +19,7 @@ import java.util.Random;
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 //@DiscriminatorColumn(name = "account_type", discriminatorType = DiscriminatorType.STRING)
-
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idAccount")
 public class Account {
 
     @Id
@@ -39,22 +41,4 @@ public class Account {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "currency_id")
     private Currency currency;
-
-    public static String generateRandomAlias() {
-        String[] words = {"manzana", "gato", "sol", "casa", "rojo", "agua", "luz", "tierra", "mar", "hoja",
-                "perro", "azul", "noche", "flor", "nieve", "nube", "viento", "planta", "libro", "cielo",
-                "guitarra", "café", "montaña", "ciudad", "pájaro", "diente", "fruta", "delfín", "luna", "puente",
-                "río", "ojo", "estrella", "naranja", "piedra", "camino", "ventana", "música", "cuerpo", "playa",
-                "árbol", "corazón", "caracol", "tren", "elefante", "nube", "lápiz", "pintura", "camisa", "silla"};
-        Random random = new Random();
-
-        // Elegir tres palabras aleatorias
-        String randomAlias = words[random.nextInt(words.length)] + "." +
-                words[random.nextInt(words.length)] + "." +
-                words[random.nextInt(words.length)];
-
-        return randomAlias;
-    }
-
-
 }

@@ -4,7 +4,6 @@ import com.cac.g6.tpfinal.entities.Currency;
 import com.cac.g6.tpfinal.entities.dto.CurrencyDto;
 import com.cac.g6.tpfinal.mappers.CurrencyMapper;
 import com.cac.g6.tpfinal.repositories.CurrencyRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.List;
 @Service
 public class CurrencyService {
 
-    private CurrencyRepository currencyRepository;
+    private final CurrencyRepository currencyRepository;
 
     public CurrencyService(CurrencyRepository currencyRepository){
         this.currencyRepository = currencyRepository;

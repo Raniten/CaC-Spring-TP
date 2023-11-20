@@ -1,6 +1,7 @@
 package com.cac.g6.tpfinal.controllers;
 
 import com.cac.g6.tpfinal.entities.Account;
+import com.cac.g6.tpfinal.entities.dto.AccountDto;
 import com.cac.g6.tpfinal.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,9 +28,9 @@ public class AccountController {
     }
 
     //OBTENER UNA SOLA cuenta por su ID (GET)
-    @GetMapping(value="/{idA}")
-    public ResponseEntity<Account> findByID(@PathVariable("idA") Long idA) {
-        Optional<Account> optAccount = service.findById(idA);
+    @GetMapping(value="/{idAccount}")
+    public ResponseEntity<Account> findByID(@PathVariable("idAccount") Long idAccount) {
+        Optional<Account> optAccount = service.findById(idAccount);
         if(optAccount.isPresent()){
             return  ResponseEntity.ok(optAccount.get());
         }else{
@@ -37,12 +38,11 @@ public class AccountController {
         }
     }
 
+
     //CREAR UNA SOLA cuenta (POST)
     @PostMapping
-    public Account save(@RequestBody Account newAccount) {
-
-        return service.addAccount(newAccount);
-
+    public Account save(@RequestBody AccountDto newAccount) {
+        return service.createAccount(newAccount);
     }
 
     // ELIMINAR UNA SOLA cuenta (DELETE)

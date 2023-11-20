@@ -51,7 +51,7 @@ public class UserController {
     @PostMapping
     public User createUser(@RequestBody UserDto newUser) {
 
-        return userService.addUser(currencyService, newUser);
+        return userService.addUser(newUser);
     }
 
 
